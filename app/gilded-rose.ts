@@ -1,66 +1,82 @@
-export class Item {
-  name: string;
-  sellIn: number;
-  quality: number;
+import Item from '@/item'
 
-  constructor(name, sellIn, quality) {
-    this.name = name;
-    this.sellIn = sellIn;
-    this.quality = quality;
-  }
-}
+const AGED_BRIE = 'Aged Brie'
+const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert'
+const SULFURAS = 'Sulfuras, Hand of Ragnaros'
 
-export class GildedRose {
+const DEFAULT_MIN_ITEM_QUALITY = 0
+const DEFAULT_MAX_ITEM_QUALITY = 50
+
+const DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN = -1
+const DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN = -2
+
+const AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN = 1
+const AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN = 2
+
+const BACKSTAGE_PASSES_FIRST_INCREASE_DAY = 10
+const BACKSTAGE_PASSES_SECOND_INCREASE_DAY = 5
+
+const BACKSTAGE_PASSES_QUALITY_VARIATION_BEFORE_FIRST_INCREASE_DAY = 1
+const BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_FIRST_INCREASE_DAY = 2
+const BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_SECOND_INCREASE_DAY = 3
+
+const BACKSTAGE_PASSES_QUALITY_AFTER_CONCERT = 0
+
+
+export default class GildedRose {
   items: Array<Item>;
 
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
 
-  updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality = this.items[i].quality + 1
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality = this.items[i].quality - 1
-              }
-            }
+  updateQuality() {    
+    for(const item of this.items) {
+      switch(item.name) {
+        case AGED_BRIE:
+          if (item.sellIn > 0) {
+            item.quality += AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN
           } else {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality
+            item.quality += AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN
           }
-        } else {
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1
+
+          if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
+            item.quality = DEFAULT_MAX_ITEM_QUALITY
           }
-        }
+
+          item.sellIn -= 1
+          break
+        case BACKSTAGE_PASSES:
+          if (item.sellIn <= 0) {
+            item.quality = BACKSTAGE_PASSES_QUALITY_AFTER_CONCERT
+          } else if (item.sellIn <= BACKSTAGE_PASSES_SECOND_INCREASE_DAY) {
+            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_SECOND_INCREASE_DAY
+          } else if (item.sellIn <= BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_FIRST_INCREASE_DAY
+          } else if (item.sellIn > BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_BEFORE_FIRST_INCREASE_DAY
+          }
+
+          if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
+            item.quality = DEFAULT_MAX_ITEM_QUALITY
+          }
+
+          item.sellIn -= 1
+          break
+        case SULFURAS:
+          break
+        default:
+          if (item.sellIn > 0) {
+            item.quality += DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN
+          } else {
+            item.quality += DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN
+          }
+
+          if (item.quality < DEFAULT_MIN_ITEM_QUALITY) {
+            item.quality = DEFAULT_MIN_ITEM_QUALITY
+          }
+
+          item.sellIn -= 1
       }
     }
 

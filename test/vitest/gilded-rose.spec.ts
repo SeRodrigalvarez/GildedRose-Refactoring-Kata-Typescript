@@ -1,4 +1,5 @@
-import { Item, GildedRose } from '@/gilded-rose';
+import GildedRose from '@/gilded-rose';
+import Item from '@/item';
 
 const DEFAULT_ITEM = "Defualt Item"
 const AGED_BRIE = 'Aged Brie'

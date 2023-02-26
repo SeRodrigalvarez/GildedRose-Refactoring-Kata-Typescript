@@ -95,4 +95,18 @@ describe('Gilded Rose', () => {
       expect(items[0].quality).toBe(6);
     });
   })
+
+  describe('Quality value limits', () => {
+    it('should not increase quality over max value', () => {
+      const gildedRose = new GildedRose([new Item(AGED_BRIE, 0, 50)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(50);
+    })
+
+    it('should not decrease quality over min value', () => {
+      const gildedRose = new GildedRose([new Item(DEFAULT_ITEM, 0, 0)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].quality).toBe(0);
+    })
+  })
 });

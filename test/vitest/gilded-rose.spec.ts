@@ -5,6 +5,7 @@ const DEFAULT_ITEM = "Defualt Item"
 const AGED_BRIE = 'Aged Brie'
 const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert'
 const SULFURAS = 'Sulfuras, Hand of Ragnaros'
+const CONJURED = 'Conjured'
 
 describe('Gilded Rose', () => {
 
@@ -76,6 +77,22 @@ describe('Gilded Rose', () => {
       const items = gildedRose.updateQuality();
       expect(items[0].sellIn).toBe(-1);
       expect(items[0].quality).toBe(0);
+    });
+  })
+
+  describe(CONJURED, () => {
+    it('should decrease -2 in quality before sellIn', () => {
+      const gildedRose = new GildedRose([new Item(CONJURED, 2, 10)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].sellIn).toBe(1);
+      expect(items[0].quality).toBe(8);
+    });
+
+    it('should decrease -4 in quality before sellIn', () => {
+      const gildedRose = new GildedRose([new Item(CONJURED, 0, 10)]);
+      const items = gildedRose.updateQuality();
+      expect(items[0].sellIn).toBe(-1);
+      expect(items[0].quality).toBe(6);
     });
   })
 });

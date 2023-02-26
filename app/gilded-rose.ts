@@ -3,12 +3,16 @@ import Item from '@/item'
 const AGED_BRIE = 'Aged Brie'
 const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert'
 const SULFURAS = 'Sulfuras, Hand of Ragnaros'
+const CONJURED = 'Conjured'
 
 const DEFAULT_MIN_ITEM_QUALITY = 0
 const DEFAULT_MAX_ITEM_QUALITY = 50
 
 const DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN = -1
 const DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN = -2
+
+const CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN = -2
+const CONJURED_QUALITY_VARIATION_AFTER_SELL_IN = -4
 
 const AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN = 1
 const AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN = 2
@@ -59,6 +63,19 @@ export default class GildedRose {
 
           if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
             item.quality = DEFAULT_MAX_ITEM_QUALITY
+          }
+
+          item.sellIn -= 1
+          break
+        case CONJURED:
+          if (item.sellIn > 0) {
+            item.quality += CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN
+          } else {
+            item.quality += CONJURED_QUALITY_VARIATION_AFTER_SELL_IN
+          }
+
+          if (item.quality < DEFAULT_MIN_ITEM_QUALITY) {
+            item.quality = DEFAULT_MIN_ITEM_QUALITY
           }
 
           item.sellIn -= 1

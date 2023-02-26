@@ -3,7 +3,8 @@ import Item from '@/item'
 const AGED_BRIE = 'Aged Brie'
 const BACKSTAGE_PASSES = 'Backstage passes to a TAFKAL80ETC concert'
 const SULFURAS = 'Sulfuras, Hand of Ragnaros'
-const CONJURED = 'Conjured'
+
+const CONJURED_REGEXP = /Conjured.*/
 
 const DEFAULT_MIN_ITEM_QUALITY = 0
 const DEFAULT_MAX_ITEM_QUALITY = 50
@@ -67,7 +68,9 @@ export default class GildedRose {
 
           item.sellIn -= 1
           break
-        case CONJURED:
+        case SULFURAS:
+          break
+        case item.name.match(CONJURED_REGEXP)?.input:
           if (item.sellIn > 0) {
             item.quality += CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN
           } else {
@@ -79,8 +82,6 @@ export default class GildedRose {
           }
 
           item.sellIn -= 1
-          break
-        case SULFURAS:
           break
         default:
           if (item.sellIn > 0) {

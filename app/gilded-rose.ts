@@ -35,69 +35,85 @@ export default class GildedRose {
     this.items = items;
   }
 
-  updateQuality() {    
+  updateQuality() {  
     for(const item of this.items) {
       switch(item.name) {
         case AGED_BRIE:
-          if (item.sellIn > 0) {
-            item.quality += AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN
-          } else {
-            item.quality += AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN
-          }
-
-          if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
-            item.quality = DEFAULT_MAX_ITEM_QUALITY
-          }
-
-          item.sellIn -= 1
+          this.updateAgedBrie(item)
           break
         case BACKSTAGE_PASSES:
-          if (item.sellIn <= 0) {
-            item.quality = BACKSTAGE_PASSES_QUALITY_AFTER_CONCERT
-          } else if (item.sellIn <= BACKSTAGE_PASSES_SECOND_INCREASE_DAY) {
-            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_SECOND_INCREASE_DAY
-          } else if (item.sellIn <= BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
-            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_FIRST_INCREASE_DAY
-          } else if (item.sellIn > BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
-            item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_BEFORE_FIRST_INCREASE_DAY
-          }
-
-          if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
-            item.quality = DEFAULT_MAX_ITEM_QUALITY
-          }
-
-          item.sellIn -= 1
+          this.updateBackstagePasses(item)
           break
         case SULFURAS:
           break
         case item.name.match(CONJURED_REGEXP)?.input:
-          if (item.sellIn > 0) {
-            item.quality += CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN
-          } else {
-            item.quality += CONJURED_QUALITY_VARIATION_AFTER_SELL_IN
-          }
-
-          if (item.quality < DEFAULT_MIN_ITEM_QUALITY) {
-            item.quality = DEFAULT_MIN_ITEM_QUALITY
-          }
-
-          item.sellIn -= 1
+          this.updateConjuredItem(item)
           break
         default:
-          if (item.sellIn > 0) {
-            item.quality += DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN
-          } else {
-            item.quality += DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN
-          }
-
-          if (item.quality < DEFAULT_MIN_ITEM_QUALITY) {
-            item.quality = DEFAULT_MIN_ITEM_QUALITY
-          }
-
-          item.sellIn -= 1
+          this.updateDefaultItem(item)
       }
     }
 
     return this.items;
+  }
+
+  private decreaseSellIn(item: Item) {
+    item.sellIn -= 1
+  }
+
+  private adjustMaxQuality(item: Item) {
+    if (item.quality > DEFAULT_MAX_ITEM_QUALITY) {
+      item.quality = DEFAULT_MAX_ITEM_QUALITY
+    }
+  }
+
+  private adjustMinQuality(item: Item) {
+    if (item.quality < DEFAULT_MIN_ITEM_QUALITY) {
+      item.quality = DEFAULT_MIN_ITEM_QUALITY
+    }
+  }
+
+  private updateAgedBrie(item: Item) {
+    if (item.sellIn > 0) {
+      item.quality += AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN
+    } else {
+      item.quality += AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN
+    }
+    this.adjustMaxQuality(item)
+    this.decreaseSellIn(item)
+  }
+
+  private updateBackstagePasses(item: Item) {
+    if (item.sellIn <= 0) {
+      item.quality = BACKSTAGE_PASSES_QUALITY_AFTER_CONCERT
+    } else if (item.sellIn <= BACKSTAGE_PASSES_SECOND_INCREASE_DAY) {
+      item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_SECOND_INCREASE_DAY
+    } else if (item.sellIn <= BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+      item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_FIRST_INCREASE_DAY
+    } else if (item.sellIn > BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+      item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_BEFORE_FIRST_INCREASE_DAY
+    }
+    this.adjustMaxQuality(item)
+    this.decreaseSellIn(item)
+  }
+
+  private updateConjuredItem(item: Item) {
+    if (item.sellIn > 0) {
+      item.quality += CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN
+    } else {
+      item.quality += CONJURED_QUALITY_VARIATION_AFTER_SELL_IN
+    }
+    this.adjustMinQuality(item)
+    this.decreaseSellIn(item)
+  }
+
+  private updateDefaultItem(item: Item) {
+    if (item.sellIn > 0) {
+      item.quality += DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN
+    } else {
+      item.quality += DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN
+    }
+    this.adjustMinQuality(item)
+    this.decreaseSellIn(item)
   }
 }

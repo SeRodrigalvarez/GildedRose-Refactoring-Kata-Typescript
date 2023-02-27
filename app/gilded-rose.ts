@@ -74,46 +74,46 @@ export default class GildedRose {
   }
 
   private updateAgedBrie(item: Item) {
-    if (item.sellIn > 0) {
+    this.decreaseSellIn(item)
+    if (item.sellIn >= 0) {
       item.quality += AGED_BRIE_QUALITY_VARIATION_BEFORE_SELL_IN
     } else {
       item.quality += AGED_BRIE_QUALITY_VARIATION_AFTER_SELL_IN
     }
     this.adjustMaxQuality(item)
-    this.decreaseSellIn(item)
   }
 
   private updateBackstagePasses(item: Item) {
-    if (item.sellIn <= 0) {
+    this.decreaseSellIn(item)
+    if (item.sellIn < 0) {
       item.quality = BACKSTAGE_PASSES_QUALITY_AFTER_CONCERT
-    } else if (item.sellIn <= BACKSTAGE_PASSES_SECOND_INCREASE_DAY) {
+    } else if (item.sellIn < BACKSTAGE_PASSES_SECOND_INCREASE_DAY) {
       item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_SECOND_INCREASE_DAY
-    } else if (item.sellIn <= BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+    } else if (item.sellIn < BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
       item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_AFTER_FIRST_INCREASE_DAY
-    } else if (item.sellIn > BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
+    } else if (item.sellIn >= BACKSTAGE_PASSES_FIRST_INCREASE_DAY) {
       item.quality += BACKSTAGE_PASSES_QUALITY_VARIATION_BEFORE_FIRST_INCREASE_DAY
     }
     this.adjustMaxQuality(item)
-    this.decreaseSellIn(item)
   }
 
   private updateConjuredItem(item: Item) {
-    if (item.sellIn > 0) {
+    this.decreaseSellIn(item)
+    if (item.sellIn >= 0) {
       item.quality += CONJURED_QUALITY_VARIATION_BEFORE_SELL_IN
     } else {
       item.quality += CONJURED_QUALITY_VARIATION_AFTER_SELL_IN
     }
     this.adjustMinQuality(item)
-    this.decreaseSellIn(item)
   }
 
   private updateDefaultItem(item: Item) {
-    if (item.sellIn > 0) {
+    this.decreaseSellIn(item)
+    if (item.sellIn >= 0) {
       item.quality += DEFAULT_QUALITY_VARIATION_BEFORE_SELL_IN
     } else {
       item.quality += DEFAULT_QUALITY_VARIATION_AFTER_SELL_IN
     }
     this.adjustMinQuality(item)
-    this.decreaseSellIn(item)
   }
 }

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
+    "target": "ES2020",
     "strict": true,
     "noImplicitAny": false,
     "sourceMap": false,
@@ -9,12 +9,9 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": [
-        "app/*"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules"
-  ]
+      "@/*": ["app/*"]
+    },
+    "outDir": "build",
+    "skipLibCheck": true
+  }
 }

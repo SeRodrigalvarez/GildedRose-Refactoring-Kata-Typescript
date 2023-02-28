@@ -20,7 +20,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(1n);
-      expect(item.quality.value).toBe(9n);
+      expect(item.quality).toBe(9n);
     });
 
     it("should decrease -2 in quality before sellIn", () => {
@@ -30,7 +30,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(-1n);
-      expect(item.quality.value).toBe(8n);
+      expect(item.quality).toBe(8n);
     });
   });
 
@@ -40,7 +40,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(1n);
-      expect(item.quality.value).toBe(11n);
+      expect(item.quality).toBe(11n);
     });
 
     it("should decrease +2 in quality after sellIn", () => {
@@ -48,7 +48,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(-1n);
-      expect(item.quality.value).toBe(12n);
+      expect(item.quality).toBe(12n);
     });
   });
 
@@ -58,7 +58,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(2n);
-      expect(item.quality.value).toBe(80n);
+      expect(item.quality).toBe(80n);
     });
   });
 
@@ -68,7 +68,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(10n);
-      expect(item.quality.value).toBe(11n);
+      expect(item.quality).toBe(11n);
     });
 
     it("should increase +2 in quality after first increase day", () => {
@@ -76,7 +76,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(9n);
-      expect(item.quality.value).toBe(12n);
+      expect(item.quality).toBe(12n);
     });
 
     it("should increase +3 in quality after second increase day", () => {
@@ -84,7 +84,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(4n);
-      expect(item.quality.value).toBe(13n);
+      expect(item.quality).toBe(13n);
     });
 
     it("should be 0 quality after sellIn day", () => {
@@ -92,7 +92,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(-1n);
-      expect(item.quality.value).toBe(0n);
+      expect(item.quality).toBe(0n);
     });
   });
 
@@ -102,7 +102,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(1n);
-      expect(item.quality.value).toBe(8n);
+      expect(item.quality).toBe(8n);
     });
 
     it("should decrease -4 in quality before sellIn", () => {
@@ -110,7 +110,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(-1n);
-      expect(item.quality.value).toBe(6n);
+      expect(item.quality).toBe(6n);
     });
   });
 
@@ -119,7 +119,7 @@ describe("Gilded Rose", () => {
       const gildedRose = new GildedRose([new AgedBrie(0n, 50n)]);
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
-      expect(item.quality.value).toBe(50n);
+      expect(item.quality).toBe(50n);
     });
 
     it("should not decrease quality over min value", () => {
@@ -128,7 +128,7 @@ describe("Gilded Rose", () => {
       ]);
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
-      expect(item.quality.value).toBe(0n);
+      expect(item.quality).toBe(0n);
     });
   });
 });

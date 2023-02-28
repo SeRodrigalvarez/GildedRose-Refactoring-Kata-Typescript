@@ -20,7 +20,7 @@ export default abstract class Item {
   }
 
   get quality() {
-    return this._quality;
+    return this._quality.value;
   }
 
   protected decreaseSellIn() {

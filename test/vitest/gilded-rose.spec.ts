@@ -58,7 +58,7 @@ describe("Gilded Rose", () => {
       gildedRose.updateQuality();
       const item = gildedRose.getItem(0);
       expect(item.sellIn).toBe(2n);
-      expect(item.quality.value).toBe(10n);
+      expect(item.quality.value).toBe(80n);
     });
   });
 

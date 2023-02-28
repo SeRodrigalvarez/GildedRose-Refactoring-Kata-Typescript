@@ -15,13 +15,13 @@ npm install
 _You may need to install `ts-node`_
 
 ```sh
-npx ts-node test/golden-master-text-test.ts
+npm run text-test
 ```
 
 Or with number of days as args:
 
 ```sh
-npx ts-node test/golden-master-text-test.ts 10
+npm run text-test 10
 ```
 
 ## Running tests

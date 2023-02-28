@@ -7,7 +7,7 @@
     "compile": "tsc",
     "pretest": "rimraf app/**/*.js test/**/*.js",
     "test": "vitest --coverage",
-    "text-test": "npx ts-node --transpileOnly -r tsconfig-paths/register build/test/golden-master-text-test.js",
+    "text-test": "npx ts-node --transpileOnly -r tsconfig-paths/register test/golden-master-text-test.ts",
     "transpiled-text-test": "node -r ts-node/register/transpile-only -r tsconfig-paths/register build/test/golden-master-text-test.js",
     "prettier": "prettier --write ."
   },

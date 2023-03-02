@@ -4,11 +4,11 @@ This is the Gilded Rose kata in TypeScript.
 
 ## Refactor branches
 
-Semantic refactor: 01-semantic-refactor
+Initial messy code: [main](/../../tree/main)
 
-SOLIDification: 02-solidification-with-item-class-modification
+Semantic refactor: [01-semantic-refactor](/../../tree/01-semantic-refactor)
 
-[Semantic refactor](/../../tree/01-semantic-refactor)
+SOLIDification: [02-solidification-with-item-class-modification](/../../tree/02-solidification-with-item-class-modification)
 
 ## Getting started
 

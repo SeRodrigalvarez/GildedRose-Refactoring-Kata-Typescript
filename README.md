@@ -2,6 +2,14 @@
 
 This is the Gilded Rose kata in TypeScript.
 
+## Refactor branches
+
+Initial messy code: [main](/../../tree/main)
+
+Semantic refactor: [01-semantic-refactor](/../../tree/01-semantic-refactor)
+
+SOLIDification: [02-solidification-with-item-class-modification](/../../tree/02-solidification-with-item-class-modification)
+
 ## Getting started
 
 Install dependencies

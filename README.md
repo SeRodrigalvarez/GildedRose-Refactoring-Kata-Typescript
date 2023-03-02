@@ -8,7 +8,7 @@ Semantic refactor: 01-semantic-refactor
 
 SOLIDification: 02-solidification-with-item-class-modification
 
-[Semantic refactor](/../tree/01-semantic-refactor)
+[Semantic refactor](/../../tree/01-semantic-refactor)
 
 ## Getting started
 
